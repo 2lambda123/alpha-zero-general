@@ -131,7 +131,7 @@ class SantoriniBoard:
     
     
     
-    def get_legal_moves(self, color):
+    def get_santorini_legal_moves(self, color):
         """Returns all the legal moves for the given color.
         (1 for white, -1 for black
         """
@@ -143,7 +143,7 @@ class SantoriniBoard:
                     moves.extend(self.get_moves_for_location(piece_location)[0])
         return moves
 
-    def get_all_moves(self, color):
+    def get_santorini_all_moves(self, color):
         """Returns 3 np arrays:
             all the legal moves for the given color.
             all moves for a given color
@@ -165,7 +165,7 @@ class SantoriniBoard:
 
         return (legal_moves, all_moves, all_moves_binary)
 
-    def get_legal_moves_binary(self, color):
+    def get_santorini_legal_moves_binary(self, color):
         """Returns a binary vector of legal moves for the given color.
         (1 for white, -1 for black
         """    
