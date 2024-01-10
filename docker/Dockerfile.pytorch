@@ -2,7 +2,7 @@
 # Note that I removed the third party package installation to keep this image smaller.
 # It is different to the docker image that is pulled from pytorch/pytorch, I cannot use the base image from official dockerhub because it somehow is missing cuda.h in /usr/local/nvidia, which makes it impossible to install some gpu libraries.
 
-FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:11.1-cudnn8-devel-ubuntu18.04
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
          build-essential \
@@ -27,13 +27,13 @@ chmod +x ~/miniconda.sh && \
 rm ~/miniconda.sh && \
 /opt/conda/bin/conda install numpy pyyaml scipy cython jupyter ipython mkl mkl-include && \
 /opt/conda/bin/conda install -c soumith magma-cuda90 && \
-/opt/conda/bin/conda install pytorch=0.4.1 -c pytorch && \
+/opt/conda/bin/conda install pytorch=1.10.0 torchvision=0.11.1 torchaudio=0.10.0 -c pytorch -c nvidia -c pytorch && \
 /opt/conda/bin/conda clean -ya
 
 ENV PATH /opt/conda/bin:$PATH
 
 # This must be done before pip so that requirements.txt is available.
-WORKDIR /opt/pytorch
+WORKDIR /workspace
 # pip install custom module listed in requirements.txt
 COPY ./docker/requirements.txt .
 RUN pip install -U pip && pip install -r requirements.txt
@@ -43,11 +43,14 @@ RUN chmod -R a+w /workspace
 
 # notebook port
 EXPOSE 8888
+EXPOSE 8097
 # visdom port
 EXPOSE 8097
 
 # Set up our notebook config.
 COPY ./docker/jupyter_notebook_config.py /root/.jupyter/
+COPY ./docker/run_jupyter.sh /
+RUN chmod +x /run_jupyter.sh
 
 # Jupyter has issues with being run directly:
 #   https://github.com/ipython/ipython/issues/7062
