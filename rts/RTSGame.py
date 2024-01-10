@@ -3,10 +3,10 @@ from typing import Tuple
 
 import numpy as np
 
-from rts.src.config_class import CONFIG
+from rts.src.config import CONFIG
 
 sys.path.append('..')
-from rts.src.Board import Board
+from rts.src.board_class import Board
 from rts.src.config import NUM_ENCODERS, NUM_ACTS, P_NAME_IDX, A_TYPE_IDX, TIME_IDX, FPS
 
 """ USE_TIMEOUT, MAX_TIME, d_a_type, a_max_health, INITIAL_GOLD, TIMEOUT, visibility"""
