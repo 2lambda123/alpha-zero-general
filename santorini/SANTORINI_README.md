@@ -1,4 +1,4 @@
-# Santorini Rules and Structures
+# Santorini Game Rules and Structures
 
 [Santorini](https://en.wikipedia.org/wiki/Santorini_(game)) is a two-player competative board game that takes place on a 5x5 board. Each player has two character pieces, (an infinite number of) cubic building pieces as well as dome pieces. 
 Players begin the game by alternatingly placing their character pieces on an empty board space. At this point the board is empty except for the 4 player pieces (2 for each player). 
@@ -28,9 +28,9 @@ The following must be true about a player's move for it to be legal:
 * The player cannot place a build a block on a space that already has three blocks on it. The player can only build a dome on that space, or build elsewhere. 
 
 ## Implementation specifics:
-Instead of treating the board as 5x5 grid, the board is treated as an array of shape (2,5,5). The first 5x5 subarray contains the locations of each player's characters. The second contains the heights of each space on the board. A player's characters are referred to internally as 1 and 2 (with -1 and -2 being the opponents), and visually represented as O and U for player 1, and X and Y for player 2 (player -1). The visualizations can be easily changed in SantorniGame.py.
+Instead of treating the board as board of shape (2,5,5), the board is treated as an array of shape (2,5,5). The first default shape: (2,5,5) subarray contains the locations of each player's characters. The second contains the heights of each space on the board. A player's characters are referred to internally as 1 and 2 (with -1 and -2 being the opponents), and visually represented as O and U for player 1, and X and Y for player 2 (player -1). The visualizations can be easily changed in SantorniGame.py.
 
-Arbitrary nxn sized boards are supported. The default is 5x5. Calling SantoriniGame(n) (see Main.py) will create games with an nxn shaped board. Internally this will be (2,n,n).
+Arbitrary nxn sized boards are supported. The default is default shape: (2,5,5). Calling Santorini Game GameGame(n) (see Main.py) will create games with an nxn shaped board. Internally this will be (2,n,n).
 
 By default, Each player's pieces are positioned around the center of the board at the start of the game, rather than having them place their own pieces. This is done to simplify the game for the neural net, since the game complexity is rather high, and the net struggles considerably to learn how to play (well). As an alternative, players can have their pieces placed randomly by setting true_random_placement=True when calling SantoriniGame: SantoriniGame(board_size, true_random_placement=True). At present, no way for players to place their pieces at the start of the game has been implemented.  
 
