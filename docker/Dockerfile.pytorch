@@ -25,9 +25,9 @@ RUN curl -o ~/miniconda.sh -O  https://repo.anaconda.com/miniconda/Miniconda3-la
 chmod +x ~/miniconda.sh && \
 ~/miniconda.sh -b -p /opt/conda && \
 rm ~/miniconda.sh && \
-/opt/conda/bin/conda install numpy pyyaml scipy cython jupyter ipython mkl mkl-include && \
+/opt/conda/bin/conda install -c conda-forge --file /opt/pytorch/docker/requirements.txt && \
 
-/opt/conda/bin/conda install pytorch && \
+pip install torch torchvision && \
 /opt/conda/bin/conda clean -ya
 
 ENV PATH /opt/conda/bin:$PATH
@@ -35,7 +35,7 @@ ENV PATH /opt/conda/bin:$PATH
 # This must be done before pip so that requirements.txt is available.
 WORKDIR /opt/pytorch
 # pip install custom module listed in requirements.txt
-COPY ./docker/requirements.txt .
+COPY docker/requirements.txt /opt/pytorch/docker/
 RUN pip install -U pip && pip install -r requirements.txt
 
 WORKDIR /workspace
