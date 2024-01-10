@@ -2,7 +2,7 @@
 # Note that I removed the third party package installation to keep this image smaller.
 # It is different to the docker image that is pulled from pytorch/pytorch, I cannot use the base image from official dockerhub because it somehow is missing cuda.h in /usr/local/nvidia, which makes it impossible to install some gpu libraries.
 
-FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:latest
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
          build-essential \
@@ -21,13 +21,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
      rm -rf /var/lib/apt/lists/*
 
 # Install miniconda, pytorch and other useful python libraries
-RUN curl -o ~/miniconda.sh -O  https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh  && \
+RUN curl -o ~/miniconda.sh -O  https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh  && \
 chmod +x ~/miniconda.sh && \
 ~/miniconda.sh -b -p /opt/conda && \
 rm ~/miniconda.sh && \
 /opt/conda/bin/conda install numpy pyyaml scipy cython jupyter ipython mkl mkl-include && \
 /opt/conda/bin/conda install -c soumith magma-cuda90 && \
-/opt/conda/bin/conda install pytorch=0.4.1 -c pytorch && \
+/opt/conda/bin/conda install pytorch -c pytorch && \
 /opt/conda/bin/conda clean -ya
 
 ENV PATH /opt/conda/bin:$PATH
