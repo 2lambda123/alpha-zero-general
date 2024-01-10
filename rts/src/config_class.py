@@ -74,14 +74,14 @@ Players mostly gather gold and construct new actors with occasional attacks.
 
 # ######## Pit with different board setup ###########
 """
-CONFIG = Configuration(num_iters=100,
-                       num_iters_for_train_examples_history=30,
-                       num_eps=4,
-                       num_mcts_sims=5,
-                       arena_compare=7,
-                       epochs=100,
-                       initial_gold_player1=10,
-                       initial_gold_player2=10,
+CONFIG = Configuration(num_iters=30,
+                       num_iters_for_train_examples_history=10,
+                       num_eps=6,
+                       num_mcts_sims=8,
+                       arena_compare=6,
+                       epochs=125,
+                       initial_gold_player1=12,
+                       initial_gold_player2=12,
                        initial_board_config=[
                            Configuration.BoardTile(1, 0, 4, 'Gold'),
                            Configuration.BoardTile(-1, 7, 4, 'Gold'),
@@ -110,18 +110,18 @@ Attacking units continue to damage and destroy enemy units when nearby, but atta
 
 # First learning model (best_player1.pth.tar):
 """
-CONFIG = Configuration(use_one_hot_encoder=True,
+CONFIG = Configuration(use_one_hot_encoder=False,
                        onehot_encoder_player1=True,
                        onehot_encoder_player2=False,
 
-                       num_iters=30,
-                       num_iters_for_train_examples_history=10,
-                       num_eps=6,
-                       num_mcts_sims=8,
-                       arena_compare=6,
-                       epochs=125,
-                       initial_gold_player1=12,
-                       initial_gold_player2=12,
+                       num_iters=20,
+                       num_iters_for_train_examples_history=5,
+                       num_eps=4,
+                       num_mcts_sims=5,
+                       arena_compare=7,
+                       epochs=100,
+                       initial_gold_player1=10,
+                       initial_gold_player2=10,,
                        
                        num_games=100,
                        pit_visibility=0)
