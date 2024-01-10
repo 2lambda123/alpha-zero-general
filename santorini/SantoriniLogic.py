@@ -1,6 +1,17 @@
 import numpy as np
 
-class Board():
+from typing import List, Tuple, Any
+import numpy as np
+
+class SantoriniBoard:
+    """
+    Represents a Santorini board.
+    
+    Attributes:
+        n (int): The length of the board.
+        pieces (np.array): An array representing the pieces on the board.
+        true_random_placement (bool): Indicates whether true random placement is enabled or not.
+    """
     """
     A Santorini Board of default shape: (2,5,5)
     
