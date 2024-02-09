@@ -3,13 +3,13 @@ import os
 import sys
 from collections import deque
 from pickle import Pickler, Unpickler
-from random import shuffle
 
 import numpy as np
 from tqdm import tqdm
 
 from Arena import Arena
 from MCTS import MCTS
+import secrets
 
 log = logging.getLogger(__name__)
 
@@ -103,7 +103,7 @@ class Coach():
             trainExamples = []
             for e in self.trainExamplesHistory:
                 trainExamples.extend(e)
-            shuffle(trainExamples)
+            secrets.SystemRandom().shuffle(trainExamples)
 
             # training new network, keeping a copy of the old one
             self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='temp.pth.tar')
