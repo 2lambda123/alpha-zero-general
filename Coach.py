@@ -21,6 +21,20 @@ class Coach():
     """
 
     def __init__(self, game, nnet, args):
+        """Docstring:
+        Initializes the AlphaZero algorithm for training a neural network to play a given game.
+        Parameters:
+            - game (Game): The game to be played.
+            - nnet (NeuralNetwork): The neural network to be trained.
+            - args (dict): A dictionary containing the arguments for training.
+        Returns:
+            - None: This function does not return any value.
+        Processing Logic:
+            - Creates a competitor network for comparison.
+            - Initializes the Monte Carlo Tree Search algorithm.
+            - Keeps track of the training examples for the specified number of iterations.
+            - Allows for the option to skip the first self-play game."""
+        
         self.game = game
         self.nnet = nnet
         self.pnet = self.nnet.__class__(self.game)  # the competitor network
@@ -128,9 +142,30 @@ class Coach():
                 self.nnet.save_checkpoint(folder=self.args.checkpoint, filename='best.pth.tar')
 
     def getCheckpointFile(self, iteration):
+        """"Returns the name of the checkpoint file for a given iteration.
+        Parameters:
+            - iteration (int): The iteration number for which the checkpoint file is needed.
+        Returns:
+            - str: The name of the checkpoint file in the format 'checkpoint_{iteration}.pth.tar'.
+        Processing Logic:
+            - Concatenates the string 'checkpoint_' with the string representation of the iteration number and '.pth.tar'.
+            - Returns the resulting string as the checkpoint file name.
+        """"
+        
         return 'checkpoint_' + str(iteration) + '.pth.tar'
 
     def saveTrainExamples(self, iteration):
+        """Saves training examples to a file.
+        Parameters:
+            - iteration (int): The current iteration number.
+        Returns:
+            - None: No return value.
+        Processing Logic:
+            - Create folder if it doesn't exist.
+            - Create file with current iteration number.
+            - Dump training examples to file.
+            - Close file."""
+        
         folder = self.args.checkpoint
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -140,6 +175,20 @@ class Coach():
         f.closed
 
     def loadTrainExamples(self):
+        """"Loads the training examples from a file and returns them. If the file is not found, prompts the user to continue or exit. If the file is found, loads the examples and sets a flag to skip the first self-play.
+        Parameters:
+            - self (type): The current object.
+        Returns:
+            - trainExamplesHistory (type): A list of training examples loaded from the file.
+        Processing Logic:
+            - Checks if the file with training examples exists.
+            - If the file exists, loads the examples and sets a flag to skip the first self-play.
+            - If the file does not exist, prompts the user to continue or exit.
+            - Uses the Unpickler module to load the examples from the file.
+            - Returns the loaded training examples.
+        Example:
+            loadTrainExamples(self)""""
+        
         modelFile = os.path.join(self.args.load_folder_file[0], self.args.load_folder_file[1])
         examplesFile = modelFile + ".examples"
         if not os.path.isfile(examplesFile):
